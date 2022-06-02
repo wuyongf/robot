@@ -25,7 +25,7 @@
         -Y $(arg yaw)
         -param robot_description
         -J ud_gripper_mount_joint 1.2
-        -unpause"/>
+        "/>
 
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <rosparam file="$(find robot)/config/gripper_controller.yaml" command="load"/>

@@ -75,7 +75,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb2500f6-13fd-4900-adee-95d004de40eb" name="Changes" comment="commit 1" />
+    <list default="true" id="fb2500f6-13fd-4900-adee-95d004de40eb" name="Changes" comment="commit 1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -432,6 +434,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="CMake Application.actionlib_generate_messages_cpp" />
       <item itemvalue="CMake Application.actionlib_generate_messages_eus" />
@@ -511,6 +518,7 @@
       <workItem from="1654149537284" duration="571000" />
       <workItem from="1654150110387" duration="54000" />
       <workItem from="1654150166755" duration="221000" />
+      <workItem from="1654150389910" duration="1213000" />
     </task>
     <task id="LOCAL-00001" summary="commit 1">
       <created>1654149841562</created>
