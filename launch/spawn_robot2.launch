@@ -1,0 +1,43 @@
+<launch>
+    <!-- initial pose -->
+    <arg name="x" default="0.0"/>
+    <arg name="y" default="0.0"/>
+    <arg name="z" default="0.0"/>
+    <arg name="yaw" default="0.0"/>
+
+    <arg name="robot_number" default="2"/>
+    <arg name="robot_name" default="/"/>
+
+    <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+    <arg name="paused" default="true" />
+    <arg name="use_sim_time" default="true" />
+    <arg name="gui" default="true" />
+    <arg name="headless" default="false" />
+    <arg name="debug" default="false" />
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find robot)/urdf/robot2_v1.urdf.xacro robot_name:=$(arg robot_name)" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" output="screen" respawn="false" args="-urdf
+        -model $(arg robot_name)
+        -x $(arg x)
+        -y $(arg y)
+        -z $(arg z)
+        -Y $(arg yaw)
+        -param robot_description
+        -J ud_gripper_mount_joint 1.2
+        -unpause"/>
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find robot)/config/gripper_controller.yaml" command="load"/>
+
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="controller_manager" output="screen"
+        args="spawn ud_gripper_mount_controller gripper_L_controller gripper_R_controller" respawn="false"/>
+
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" >
+
+    </node>
+
+</launch>

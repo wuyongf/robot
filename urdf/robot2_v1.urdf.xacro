@@ -1,0 +1,314 @@
+<?xml version='1.0'?>
+<robot name="robot2" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="robot_name" default="/"/>
+  <!-- Spawn properties -->
+  <xacro:include filename="$(find robot)/urdf/common_properties.xacro"/>
+  <xacro:include filename="$(find robot)/urdf/robot2.gazebo.xacro"/>
+  <!-- Spawn gripper_assembly --> 
+  <xacro:include filename="$(find robot)/config/macro.gripper_assembly.xacro" />
+  <xacro:gripper_assembly />
+  <!-- Spawn camera -->
+  <!-- <xacro:include filename="$(find realsense2_description)/urdf/test_d435_camera.urdf.xacro" /> -->
+
+  <!-- base_footpint setup -->
+  <link name="base_footprint"/>
+  <joint name="base_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin xyz="0.0 0.0 0.13" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Base Link -->
+  <link name="base_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 3.14" />
+        <geometry>
+            <mesh filename="package://robot/meshes/bases/robot2_board_2.stl" scale="1 1 1"/>
+        </geometry>
+      </visual>
+      <!-- Base collision, mass and inertia -->
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 3.14" />
+        <geometry>
+            <mesh filename="package://robot/meshes/bases/robot2_board_2.stl" scale="1 1 1"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="5.0"/>
+        <inertia ixx="0.13" ixy="0.0" ixz="0.0" iyy="0.21" iyz="0.0" izz="0.13"/>
+      </inertial>
+  </link>
+  
+  <link name="caster1">
+  
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.065" />
+      </geometry>
+    </visual>
+    <!-- Caster1 collision, mass and inertia -->
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.065" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.00169" ixy="0.0" ixz="0.0" iyy="0.00169" iyz="0.0" izz="0.00169"/>
+    </inertial>
+
+  </link>
+
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster1"/>
+    <origin xyz="-0.2 0 -0.065" rpy="0 0 0"/>
+  </joint>
+
+  <!-- IMU  -->
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="-0.032 0 0.068" rpy="0 0 0"/>
+  </joint>
+
+  <link name="imu_link"/>
+    
+  <!-- Right Wheel -->
+  <link name="right_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570795 0 0" />
+      <geometry>
+          <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </visual>
+    <!-- Right Wheel collision, mass and inertia -->
+    <collision>
+    <origin xyz="0 0 0" rpy="1.570795 0 0" />
+      <geometry>
+          <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.005" iyz="0.0" izz="0.005"/>
+    </inertial>
+  </link>
+
+  <!-- Right Wheel joint -->
+  <joint name="joint_right_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin xyz="0.2 -0.225 -0.030" rpy="0 0 0" /> 
+    <axis xyz="0 1 0" />
+  </joint>
+
+
+  <!-- Left Wheel -->
+  <link name="left_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570795 0 0" />
+      <geometry>
+          <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </visual>
+    <!-- Left Wheel collision, mass and inertia -->
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570795 0 0" />
+      <geometry>
+          <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.005" iyz="0.0" izz="0.005"/>
+    </inertial>
+  </link>
+
+  <!-- Left Wheel joint -->
+  <joint name="joint_left_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin xyz="0.2 0.225 -0.030" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+
+    <!-- Front Stand-->
+  <joint name="scan_stand_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_stand"/>
+    <origin xyz="0.325 0 0.00" rpy="0 0 0"/>
+  </joint>
+
+  <link name="front_stand">
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+          <box size="0.05 0.3 0.1" />
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+          <box size="0.05 0.3 0.1" />
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="1.0" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+              iyy="0.001" iyz="0.0"
+              izz="0.001" />
+    </inertial>
+  </link> 
+
+  <!--Attach camera to the front_stand -->
+  <!-- <joint name="camera_top_module_joint" type="fixed">
+    <parent link="front_stand" />
+    <child link="camera_base_link"/>
+    <origin xyz="0.01 0 0.05" rpy="0 0 0"/>
+  </joint> -->
+    
+
+
+  <!-- Lidar -->
+  <!-- Attach Lidar to front stand -->
+  <joint name="scan_joint" type="fixed">
+    <parent link="front_stand" />
+    <child link="base_scan"/>
+    <origin xyz="0.0 0 -0.065" rpy="3.14 0 0"/>
+  </joint>
+
+
+  <link name="base_scan">
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+  <cylinder length="0.030" radius="0.02"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.030" radius="0.02"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="0.2" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+              iyy="0.001" iyz="0.0"
+              izz="0.001" />
+    </inertial>
+  </link> 
+
+  
+
+
+  <!-- Gripper -->
+  <!-- top module -->
+  <link name="top_module_link">
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.475 0.4 0.26638" />
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.475 0.4 0.26638" />
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="0.4" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+              iyy="0.001" iyz="0.0"
+              izz="0.001" />
+    </inertial>
+  </link> 
+
+  <joint name="top_module_base_link_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="top_module_link"/>
+    <origin xyz="0.0625 0 0.19319" rpy="0 0 0"/>
+  </joint>
+
+  <!-- gripper mount -->
+  <joint name="gripper_mount_top_module_joint" type="fixed">
+    <parent link="top_module_link" />
+    <child link="gripper_mount_link"/>
+    <origin xyz="-0.2375 0 0.13319" rpy="0 0 -1.57"/>
+  </joint>
+
+  <!-- ud gripper mount -->
+  <joint name="ud_gripper_mount_joint" type="prismatic">
+    <parent link="gripper_mount_link" />
+    <child link="gripper_mount_ud_link"/>
+    <origin xyz="0 0.58 -0.24" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="300" lower="0" upper="1.2" velocity="0.25"/>
+  </joint> 
+
+  <transmission name="trans_ud">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="ud_gripper_mount_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_ud">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- gripper_L -->
+  <joint name="gripper_L_ud_joint" type="prismatic">
+    <parent link="gripper_mount_ud_link" />
+    <child link="gripper_L_link"/>
+    <origin xyz="0.5 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="1000" lower="-0.5" upper="0" velocity="0.5"/>
+  </joint>
+
+  <transmission name="trans_gripper_L">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="gripper_L_ud_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_gripper_L">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- gripper_R -->
+  <joint name="gripper_R_ud_joint" type="prismatic">
+    <parent link="gripper_mount_ud_link" />
+    <child link="gripper_R_link"/>
+    <origin xyz="-0.5 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="1000" lower="0" upper="0.5" velocity="0.5"/>
+  </joint>
+
+  <transmission name="trans_gripper_R">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="gripper_R_ud_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_gripper_R">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  
+ 
+ 
+</robot>

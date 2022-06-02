@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/yf/hkstp_ws/src/robot/cmake-build-debug/devel/setup.sh

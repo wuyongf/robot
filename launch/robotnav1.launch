@@ -1,0 +1,36 @@
+<launch>
+  <arg name="map_file" default="$(find robot)/map.yaml"/>
+  <arg name="open_rviz" default="true"/>
+  <arg name="move_forward_only" default="false"/>
+ 
+
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <include file="$(find robot)/launch/amcl_t.launch">
+    <arg name="robot_name"     default="robot2"/>
+    <arg name="robot_tf"       default="robot2_tf/"/>
+    <arg name="scan_topic"     default="/robot2/scan"/>
+    <arg name="initial_pose_x" default="-3.4"/>
+    <arg name="initial_pose_y" default="-0.71"/>
+    <arg name="initial_pose_a" default="0.0"/>
+    <arg name="odom_frame_id" default="robot2_tf/odom"/>
+    <arg name="base_frame_id" default="robot2_tf/base_footprint"/>
+  </include>
+    
+  <include file="$(find robot)/launch/move_base_t.launch">
+    <arg name="robot_name"    default="robot2"/>
+    <arg name="robot_tf"      default="robot2_tf/"/>
+    <arg name="cmd_vel_topic" default="/robot2/cmd_vel"/>
+    <arg name="odom_frame_id" default="robot2_tf/odom"/>
+    <arg name="base_frame_id" default="robot2_tf/base_footprint"/>
+    <arg name="odom_topic"    default="/robot2/odom"/>
+    <arg name="laser_topic"   default="/robot2/scan"/>
+  </include>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find robot)/rviz/robotnav.rviz"/>
+  </group>
+</launch>
+

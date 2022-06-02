@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<sdf version='1.6'>
+
+  <model name='cylinder4'>
+    <pose frame=''>0.6 0.74 0.6 0 -0 0</pose>
+    <allow_auto_disable>0</allow_auto_disable>
+    <link name='link'>
+      <velocity_decay>
+        <linear>0.0005</linear>
+        <angular>0.0002</angular>
+      </velocity_decay>
+      <inertial>
+        <mass>0.016</mass>
+        <inertia>
+          <ixx>0.00034465</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00034465</iyy>
+          <iyz>0</iyz>
+          <izz>0.0006893</izz>
+
+          <!-- <ixx>0.000233958333333</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.000233958333333</iyy>
+          <iyz>0</iyz>
+          <izz>0.00036125</izz> -->
+        </inertia>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.2125</radius>
+            <length>0.2</length>
+          </cylinder>
+        </geometry>
+        <max_contacts>1000</max_contacts>
+        <surface>
+          <contact>
+	          <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>1</max_vel>
+
+            </ode>
+          </contact>
+
+        <friction>
+          <ode>
+            <mu>6</mu>
+            <mu2>6</mu2>
+	          <slip1>0</slip1>
+            <slip2>0</slip2>
+          </ode>
+          <torsional>
+            <coefficient>1</coefficient>
+            
+            <ode>
+              <slip>0</slip>
+            </ode>
+          </torsional>
+         </friction>
+        </surface>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <cylinder>
+            <radius>0.2125</radius>
+            <length>0.2</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Yellow</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <self_collide>1</self_collide>
+      <enable_wind>0</enable_wind>
+      <kinematic>0</kinematic>
+    </link>
+
+    <!-- <plugin name="fluid_resitance_plugin" filename="libfluid_resitance_plugin.so">
+          <fluid_resitanceTopicName>/fluid_resitance</fluid_resitanceTopicName>
+          <NameLinkToApplyResitance>link</NameLinkToApplyResitance>
+          <rate>2.0</rate>
+    </plugin> -->
+  </model>
+
+</sdf>

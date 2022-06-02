@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+  <arg name="topic_prefix"                default="/robot2" />
+  <arg name="tf_prefix" 			            default="robot2_tf" /> <!-- For frame_id -->
+  <arg name="gripper_max_width" 			    default="1.0" />
+  <arg name="object_tolerance" 			      default="0.70" />
+  <arg name="base_tolerance" 			        default="0.65" />
+  
+  <node pkg="robot" type="robot" name="robot2_pick_n_place_only" output="screen">
+    <param name="topic_prefix" 			      value="$(arg topic_prefix)" />
+    <param name="tf_prefix" 			        value="$(arg tf_prefix)" /> 
+    <param name="gripper_max_width" 			value="$(arg gripper_max_width)" /> 
+    <param name="object_tolerance" 			  value="$(arg object_tolerance)" /> 
+    <param name="base_tolerance" 			    value="$(arg base_tolerance)" /> 
+  </node>
+
+</launch>

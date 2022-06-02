@@ -1,0 +1,29 @@
+<launch>
+
+  <arg name="robot2_name" default="robot2"/>
+  
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find robot)/worlds/competition2B_local.world"/>
+    <arg name="paused" default="true"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+
+  </include>
+   
+  <group ns="$(arg robot2_name)">
+    <param name="tf_prefix" value="$(arg robot2_name)_tf"/>
+    <include file="$(find robot)/launch/spawn_robot2.launch" >
+      <arg name="x" default="-3.4"/>
+      <arg name="y" default="-0.71"/>
+      <arg name="z" default="0.0"/>
+      <arg name="yaw" default="0.0"/>
+      <arg name="robot_name"  value="$(arg robot2_name)" />
+    </include>
+    
+  </group>
+  
+  <include file="$(find robot)/launch/includes/spawn_scene1.launch.xml" />
+  
+</launch>

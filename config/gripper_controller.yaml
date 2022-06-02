@@ -1,0 +1,18 @@
+# Position Controllers ---------------------------------------
+# Publish all joint states -----------------------------------
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50  
+
+ud_gripper_mount_controller:
+      type: effort_controllers/JointPositionController
+      joint: ud_gripper_mount_joint
+      pid: {p: 100.0, i: 0.01, d: 40.0}
+gripper_L_controller:
+      type: effort_controllers/JointPositionController
+      joint: gripper_L_ud_joint
+      pid: {p: 100.0, i: 0.01, d: 40.0}
+gripper_R_controller:
+      type: effort_controllers/JointPositionController
+      joint: gripper_R_ud_joint
+      pid: {p: 100.0, i: 0.01, d: 40.0}
